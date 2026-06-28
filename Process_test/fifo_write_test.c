@@ -46,10 +46,9 @@ int main(int argc, char const *argv[])
     printf("发送数据到管道完成 进程终止\n");
     close(fd);
 
-    if(unlink(pipe_path) == -1)//释放管道，清除对应的特殊文件
+    if(unlink(pipe_path) == -1)//释放管道，清除对应的特殊文件，匿名管道直接关掉即可
     {
-         perror("unlink");
-
+         perror("unlink");//ctrl+d终止
     }
 
     return 0;
