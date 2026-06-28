@@ -23,7 +23,7 @@ int main()
         * return: ssize_t -> long int : 读取到数据的字节长度 成功大于0 失败-1
         * ssize_t read (int _fd, void *_buf, size_t _nbytes)
         */
-    while ((bytes_read = read(fd, buffer, sizeof(buffer))) > 0)
+    while ((bytes_read = read(fd, &buffer, sizeof(buffer))) > 0)
     {
         // 文件描述符类型的 stdin -> 0
         // stdout -> 1  stderr -> 2
@@ -34,7 +34,7 @@ int main()
          * return: 成功返回写出数据的长度 失败返回-1
          * ssize_t write (int _fd, const void *_buf, size_t _n)
          */
-        write(STDOUT_FILENO, buffer, bytes_read);
+        write(STDOUT_FILENO, &buffer, bytes_read);//写到控制台上去STDOUT_FILENO
     }
 
     if (bytes_read == -1)

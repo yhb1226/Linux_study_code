@@ -38,5 +38,16 @@ fork_execve_test1:fork_execve_test1.c
 	./$@
 	-rm ./$@
 
+unnamed_pipe_test:unnamed_pipe_test.c
+	$(CC) -o $@ $^
+	./$@ test
+	-rm ./$@
+
+fifo_write_test:fifo_write_test.c
+	$(CC) -o $@ $^
+
+fifo_read_test:fifo_read_test.c
+	$(CC) -o $@ $^
+
 clean:
 	-rm $(objects)           # 清理中间文件
