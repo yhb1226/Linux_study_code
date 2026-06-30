@@ -1,10 +1,29 @@
 # 本节主要学习进程之间的应用
+    主要包括fork复制出父进程和子进程、execve+fork在进程中进行跳转、匿名管道、有名管道（管道的意义在与进程之间不能进行通信）
+
+## 匿名管道
+过程分为：
+    1.首先创建管道，再fork两个进程；
+    2.再进行两个进程的读写操作，父进程写则关闭读的功能，读写分别对应的是0和1
+    3.在读的过程可中可以使用while进行循环读取
+```c
+    char str;
+    while(read(pipefd[0],&str,1)>0)
+
+        {
+            write(STDOUT_FILENO,&str,1);//读取完成打印端口
+        }
+```
+    4.最后为了防止重叠可以再打印换行后直接exit(EXIT_SUCCESS)
+
+注： 
+    a.操作整个内存块用sizeof,想要传递的是字符串内容用strlen
+    b.waitpid(cpid,NULL,0);//一直等待子进程结束
+
+## 有名管道 
+
 
 ```c
-if (fd == -1)
-{
-    perror("open");
-    exit(EXIT_FAILURE);  
-}
+
 ```
 

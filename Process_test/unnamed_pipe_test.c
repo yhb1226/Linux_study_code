@@ -39,13 +39,14 @@ int main(int argc, char const *argv[])
         sprintf(str,"新学员%d接收信息",getpid());
         write(STDOUT_FILENO,str,sizeof(str));
         char buf;
+
         while (read(pipefd[0],&buf,1) > 0)
         {
             write(STDOUT_FILENO,&buf,1);
         }
         write(STDOUT_FILENO,"\n",1);
         close(pipefd[0]);
-        _exit(EXIT_FAILURE);
+        _exit(EXIT_SUCCESS);
     }
     else
     {
@@ -56,7 +57,7 @@ int main(int argc, char const *argv[])
         write(pipefd[1],argv[1],strlen(argv[1]));//写数据是写到内核里面的
         close(pipefd[1]);
         waitpid(cpid,NULL,0);
-        exit(EXIT_FAILURE);
+        exit(EXIT_SUCCESS);
     }
     return 0;
 }

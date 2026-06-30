@@ -43,6 +43,12 @@ unnamed_pipe_test:unnamed_pipe_test.c
 	./$@ test
 	-rm ./$@
 
+unnamed_pipe_test_copy:unnamed_pipe_test_copy.c
+	$(CC) -o $@ $^
+	./$@ test
+	-rm ./$@
+
+
 fifo_write_test:fifo_write_test.c
 	$(CC) -o $@ $^
 
