@@ -22,6 +22,7 @@
 
 注： 
     a.操作整个内存块用sizeof,想要传递的是字符串内容用strlen
+    
     b.waitpid(cpid,NULL,0);//一直等待子进程结束
 
 ## 有名管道 
