@@ -55,5 +55,26 @@ fifo_write_test:fifo_write_test.c
 fifo_read_test:fifo_read_test.c
 	$(CC) -o $@ $^
 
+shared_memory:shared_memory.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
+mq_test:mq_test.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
+signal_test:signal_test.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@	
+
+producer:producer.c
+	$(CC) -o $@ $^
+
+consumer:consumer.c
+	$(CC) -o $@ $^
+
 clean:
 	-rm $(objects)           # 清理中间文件
