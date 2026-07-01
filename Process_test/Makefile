@@ -52,13 +52,30 @@ unnamed_pipe_test_copy:unnamed_pipe_test_copy.c
 fifo_write_test:fifo_write_test.c
 	$(CC) -o $@ $^
 
+fifo_write_test_copy:fifo_write_test_copy.c
+	$(CC) -o $@ $^
+
+
+
 fifo_read_test:fifo_read_test.c
 	$(CC) -o $@ $^
+
+
+fifo_read_test_copy:fifo_read_test_copy.c
+	$(CC) -o $@ $^
+
+
 
 shared_memory:shared_memory.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@
+
+shared_memory_copy:shared_memory_copy.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
 
 mq_test:mq_test.c
 	$(CC) -o $@ $^

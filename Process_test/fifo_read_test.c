@@ -12,8 +12,8 @@ int main(int argc, char const *argv[])
 {
     int fd;
     char *pipe_path = "/tmp/myfifo";
-    // 创建有名管道文件，权限0664
-
+    
+    
     // if (mkfifo(pipe_path, 0664) != 0)
     // {
     //     perror("mkfifo");
