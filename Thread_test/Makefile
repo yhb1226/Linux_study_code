@@ -14,7 +14,7 @@ terminate_test:terminate_test.c
 pthread_detach_test:pthread_detach_test.c
 	$(CC) -o $@ $^
 	./$@
-	-rm ./$@
+	-rm ./$@ 
 
 pthread_cancel_delay:pthread_cancel_delay.c
 	$(CC) -o $@ $^
