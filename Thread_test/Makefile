@@ -35,3 +35,8 @@ race_condition_revise_test:race_condition_revise_test.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@
+
+rwlock_test_write_unlock:rwlock_test_write_unlock.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
