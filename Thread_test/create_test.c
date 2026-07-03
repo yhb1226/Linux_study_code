@@ -59,12 +59,12 @@ int main(int argc, char const *argv[])
     pthread_t pid_input;
     pthread_t pid_output;
     // 创建线程
-    // 创建读线程
+    // 创建读线程,input_thread表示要执行的函数
     pthread_create(&pid_input,NULL,input_thread,NULL);
     // 创建写线程
     pthread_create(&pid_output,NULL,output_thread,NULL);
 
-    // 主线程等待读写线程结束
+    // 主线程阻塞等待读写线程结束
     pthread_join(pid_input,NULL);
     pthread_join(pid_output,NULL);
 
