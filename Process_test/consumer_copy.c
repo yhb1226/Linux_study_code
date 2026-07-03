@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
 	{
 		perror("mq_open");
 		exit(EXIT_FAILURE);
-	}
+	} 
 
     while (1)
 	{
