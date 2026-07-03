@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-void * task(void * arg){
+void * task(void * arg){ 
     printf("thread started\n");
     sleep(2);
     printf("thread finished\n");
