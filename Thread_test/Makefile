@@ -20,3 +20,13 @@ pthread_cancel_delay:pthread_cancel_delay.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@
+
+pthread_cancel_async_test:pthread_cancel_async_test.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
+race_condition_test:race_condition_test.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
