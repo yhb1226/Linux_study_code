@@ -33,3 +33,14 @@
     free(red_result->serial);
     free(red_result);
 ```
+    3.强制类型转换与指针自增问题
+```c
+    void *add_num(void* arg)
+{
+
+    int *i = (int *)arg;//主函数传入参数是int类型的，但是子线程是void* arg，所以需要强制类型转换成int类型的
+    (*i)++;//*i指向在int *i时候对应的地址，对于地址上的将字数字进行加1操作
+    return NULL;
+}
+```
+

@@ -1,3 +1,4 @@
+//取消函数pthread_cancel(),向子线程发送取消消息，当子线程运行到规定的取消消息函数pthread_testcancel()时候才会真正的取消子线程
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +30,7 @@ int main(int argc, char const *argv[])
     void * res;
     // pthread_cancel只是发出一个停止的命令
     pthread_join(tid,&res);
-
+    //取消子线程是否成功的标志位
     if (res == PTHREAD_CANCELED)
     {
         printf("线程被取消\n");

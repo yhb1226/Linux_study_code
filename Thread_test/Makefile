@@ -43,6 +43,12 @@ race_condition_test:race_condition_test.c
 	./$@
 	-rm ./$@
 
+race_condition_test_copy:race_condition_test_copy.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
+
 race_condition_revise_test:race_condition_revise_test.c
 	$(CC) -o $@ $^
 	./$@
