@@ -80,6 +80,7 @@ int main(int argc, char const *argv[])
     pthread_t pid_white;
     char red_code = 'r';
     char white_code = 'w';
+    //接收返回变量的指针
     Result *red_result = NULL;
     Result *white_result = NULL;
 

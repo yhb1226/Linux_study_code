@@ -1,3 +1,4 @@
+//pthread_detach不会像pthread_join一样阻塞等待，让子线程可以独立回收，的那时如果主线程先于子线程结束也会杀死子线程
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

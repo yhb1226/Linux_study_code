@@ -6,11 +6,23 @@ create_test:create_test.c
 	./$@
 	-rm ./$@
 
+create_test_copy:create_test_copy.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
+
 terminate_test:terminate_test.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@ 
 
+terminate_test_copy:terminate_test_copy.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@ 
+
+	
 pthread_detach_test:pthread_detach_test.c
 	$(CC) -o $@ $^
 	./$@
