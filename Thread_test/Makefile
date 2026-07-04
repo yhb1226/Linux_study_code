@@ -58,3 +58,13 @@ rwlock_test_write_unlock:rwlock_test_write_unlock.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@
+
+condition_var:condition_var.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
+condition_var_revise:condition_var_revise.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
