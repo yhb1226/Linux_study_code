@@ -54,7 +54,12 @@ race_condition_revise_test:race_condition_revise_test.c
 	./$@
 	-rm ./$@
 
-rwlock_test_write_unlock:rwlock_test_write_unlock.c
+rwlock_test_write_lock:rwlock_test_write_lock.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
+rwlock_test_write_lock_copy:rwlock_test_write_lock_copy.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@

@@ -1,17 +1,18 @@
 //静态锁用在完自己销毁，动态锁要手动销毁
-//此代码已经加上写的锁
+//静态锁就是“开箱即用”的默认配置锁，无需销毁，伴随进程一生；动态锁则是你需要“手动组装、手动拆卸”的锁，胜在灵活，可以配置属性，也可以即用即弃。
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
 
 // 静态初始化方式（可选，和动态init二选一）
 // static pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
+//1.创建动态读写锁
 pthread_rwlock_t rwlock;
 int shared_data = 0;
 
 // 读线程：加读锁读取共享数据（读锁可被多个线程同时持有）
 void * read_writer(void * arg){
-    pthread_rwlock_rdlock(&rwlock);
+    pthread_rwlock_rdlock(&rwlock);//2.读线程加锁
     printf("当前是%s, shared_data为%d\n", (char *)arg, shared_data);
     pthread_rwlock_unlock(&rwlock);
     return NULL;
@@ -19,7 +20,7 @@ void * read_writer(void * arg){
 
 // 写线程：加写锁修改共享数据（写锁独占，同一时间仅一个写线程）
 void * lock_writer(void * arg){
-    pthread_rwlock_wrlock(&rwlock);
+    pthread_rwlock_wrlock(&rwlock);//3.写线程加锁
     int tmp = shared_data + 1;
     sleep(1);
     shared_data = tmp;
@@ -30,7 +31,7 @@ void * lock_writer(void * arg){
 
 int main(int argc, char const *argv[])
 {
-    // 动态初始化读写锁
+    // 4.动态初始化读写锁
     pthread_rwlock_init(&rwlock, NULL);
 
     pthread_t writer1, writer2;
@@ -61,7 +62,7 @@ int main(int argc, char const *argv[])
     pthread_join(reader5, NULL);
     pthread_join(reader6, NULL);
 
-    // 销毁读写锁
+    // 5.销毁读写锁
     pthread_rwlock_destroy(&rwlock);
     return 0;
 }
