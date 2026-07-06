@@ -1,3 +1,4 @@
+//同步例子，谁先运行到sem_wait谁就要先等待POST结束才会
 #include <stdio.h>
 #include <pthread.h>
 #include <semaphore.h>

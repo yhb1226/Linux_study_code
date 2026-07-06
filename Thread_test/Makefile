@@ -74,6 +74,12 @@ signal_sample:signal_sample.c
 	./$@
 	-rm ./$@
 
+signal_sample_copy:signal_sample_copy.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
+
 signal_double:signal_double.c
 	$(CC) -o $@ $^
 	./$@
