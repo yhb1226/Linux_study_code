@@ -68,3 +68,15 @@ condition_var_revise:condition_var_revise.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@
+
+signal:signal.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
+signal_process:signal_process.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
+
+
