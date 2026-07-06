@@ -64,17 +64,17 @@ rwlock_test_write_lock_copy:rwlock_test_write_lock_copy.c
 	./$@
 	-rm ./$@
 
-condition_var:condition_var.c
+mutex_condition:mutex_condition.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@
 
-condition_var_revise:condition_var_revise.c
+signal_sample:signal_sample.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@
 
-signal:signal.c
+signal_double:signal_double.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@
