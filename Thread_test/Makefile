@@ -90,4 +90,8 @@ signal_process:signal_process.c
 	./$@
 	-rm ./$@
 
+signal_alternate:signal_alternate.c
+	$(CC) -o $@ $^
+	./$@
+	-rm ./$@
 
