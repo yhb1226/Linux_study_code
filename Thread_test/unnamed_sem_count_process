@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <semaphore.h>
+#include <sys/wait.h>
+
+#define SHM_NAME "/fork_sem_shm"
+#define SHM_SIZE sizeof(sem_t)
+
+int main() {
+    // 1. 创建共享内存，用于存放无名信号量
+    int fd = shm_open(SHM_NAME, O_CREAT | O_RDWR, 0644);
+    if (fd == -1) {
+        perror("shm_open");
+        exit(1);
+    }
+    ftruncate(fd, SHM_SIZE);
+
+    // 2. 映射共享内存到当前进程地址空间
+    sem_t *sem = mmap(NULL, SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    close(fd);   // 映射后文件描述符可以关闭
+    if (sem == MAP_FAILED) {
+        perror("mmap");
+        exit(1);
+    }
+
+    // 3. 初始化无名信号量：进程间共享(第2参数=1)，初值为0
+    if (sem_init(sem, 1, 0) == -1) {
+        perror("sem_init");
+        exit(1);
+    }
+
+    pid_t pid = fork();
+    if (pid < 0) {
+        perror("fork");
+        exit(1);
+    }
+
+    if (pid == 0) {
+        // --- 子进程：模拟初始化工作，完成后通知父进程 ---
+        printf("子进程：开始初始化资源...\n");
+        sleep(2);                            // 模拟耗时操作
+        printf("子进程：初始化完成！\n");
+
+        sem_post(sem);                       // V操作：发出“准备就绪”信号
+        printf("子进程：已通知父进程\n");
+
+        // 子进程退出前清理自己的映射
+        munmap(sem, SHM_SIZE);
+        return 0;
+    } else {
+        // --- 父进程：等待子进程完成初始化 ---
+        printf("父进程：等待子进程初始化完成...\n");
+        sem_wait(sem);                       // P操作：阻塞直到子进程post
+        printf("父进程：收到就绪信号，开始使用资源！\n");
+
+        // 等待子进程结束（好习惯）
+        wait(NULL);
+
+        // 父进程负责清理信号量和共享内存
+        sem_destroy(sem);
+        munmap(sem, SHM_SIZE);
+        shm_unlink(SHM_NAME);                // 删除共享内存对象
+    }
+
+    return 0;
+}
