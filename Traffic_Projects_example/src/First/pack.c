@@ -3,7 +3,9 @@
 #include <arpa/inet.h>   // htons, htonl
 #include <endian.h>      // htobe64, be64toh (Linux)
 
-int pack_score_payload(score_report_payload_t *p, uint8_t *buf, int max_len) {
+//打包转换为字节流
+int pack_score_payload(score_report_payload_t *p, uint8_t *buf, int max_len) 
+{
     // 计算所需长度：8 + 32 + 4 = 44 字节
     int need = sizeof(uint64_t) + MAX_NAME_LEN + sizeof(uint32_t);
     if (max_len < need) return -1;
@@ -27,7 +29,8 @@ int pack_score_payload(score_report_payload_t *p, uint8_t *buf, int max_len) {
     return offset;   // 实际写入长度
 }
 
-int unpack_score_payload(uint8_t *buf, int buf_len, score_report_payload_t *p) {
+int unpack_score_payload(uint8_t *buf, int buf_len, score_report_payload_t *p) 
+{
     int need = sizeof(uint64_t) + MAX_NAME_LEN + sizeof(uint32_t);
     if (buf_len < need) return -1;
 
@@ -54,17 +57,18 @@ int unpack_score_payload(uint8_t *buf, int buf_len, score_report_payload_t *p) {
 }
 
 int pack_message(uint8_t msg_type, uint8_t *payload, int payload_len,
-                 uint8_t *out_buf, int max_len) {
+                 uint8_t *out_buf, int max_len) 
+{
     int total_len = sizeof(proto_header_t) + payload_len;
     if (max_len < total_len) return -1;
 
     // 填充头部
     proto_header_t hdr;
-    hdr.magic       = htonl(PROTO_MAGIC);   // 网络字节序
-    hdr.version     = PROTO_VERSION;
-    hdr.msg_type    = msg_type;
-    hdr.flags       = 0;                   // 暂无标志
-    hdr.payload_len = htonl(payload_len);
+    hdr.magic       = htonl(PROTO_MAGIC);   // 网络字节序，避免垃圾消息和错误连接
+    hdr.version     = PROTO_VERSION;        //规定版本号可以多版本共同运行
+    hdr.msg_type    = msg_type;             //消息类型，用于解析不同的消息，比如是名字，学号还是ID号
+    hdr.flags       = 0;                   //暂无标志，预留标志位
+    hdr.payload_len = htonl(payload_len);  //规定字节流长度，避免粘包问题出现
 
     memcpy(out_buf, &hdr, sizeof(hdr));
     memcpy(out_buf + sizeof(hdr), payload, payload_len);
