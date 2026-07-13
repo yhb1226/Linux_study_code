@@ -94,4 +94,3 @@ signal_alternate:signal_alternate.c
 	$(CC) -o $@ $^
 	./$@
 	-rm ./$@
-
