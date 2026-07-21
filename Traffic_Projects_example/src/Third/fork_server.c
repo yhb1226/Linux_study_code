@@ -23,10 +23,17 @@ int main() {
     char buf[BUF_SIZE];
 
     signal(SIGCHLD, sigchld_handler);  // 防止僵尸进程
-
+    //创建监听客户端连接请求的
+    /*
+    extern int socket (int __domain, int __type, int __protocol) __THROW;
+    int __domain：填的是WIFI类型，大多数默认ipv4即可
+    int __type：传输层协议，SOCK_STREAM是tcp协议(可靠，不丢包)，SOCK_DGRAM是udp协议(会丢包，但延迟低)
+    int __protocol：默认0即可
+    */
     listen_fd = socket(AF_INET, SOCK_STREAM, 0);
 
     memset(&addr, 0, sizeof(addr));
+    //设置泰山派自己的端口号信息
     addr.sin_family = AF_INET;
     addr.sin_port = htons(PORT);
     addr.sin_addr.s_addr = INADDR_ANY;
@@ -37,6 +44,7 @@ int main() {
     printf("多进程服务器，端口 %d\n", PORT);
 
     while (1) {
+        //获取庐山派发送的端口号和IP信息
         client_fd = accept(listen_fd, (struct sockaddr*)&client_addr, &client_len);
         if (client_fd < 0) continue;
 
